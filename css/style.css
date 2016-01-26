@@ -1,0 +1,219 @@
+nav {
+	border: 1px solid #2B2B2B;
+}
+
+nav ul{
+	background-color: #303236;
+	padding: 0;
+    margin: 0;
+    list-style-type: none;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+.subNavs{
+	background-color: #fff;
+}
+.subNav{
+	position: relative;
+	text-align: left;
+	-webkit-flex-wrap: wrap;
+	-ms-flex-wrap: wrap;
+	flex-wrap: wrap;
+	overflow: hidden;
+	max-height: 0;
+	visibility: hidden;
+	padding: 0;
+	border: 0;
+	opacity: .5;
+}
+
+.subNavs.u-closed .subNav{
+	-webkit-transition: all .3s ease-in-out;
+	transition: all .3s ease-in-out
+}
+.subNav_inner{
+	padding: 10px 50px 10px 10px;
+}
+
+.subNav a{
+	height: auto;
+	cursor: pointer;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	-ms-flex-align: center;
+	align-items: center;
+	font-weight: 400;
+	text-transform: none;
+	padding: 10px 15px;
+	display: inline-block;
+	line-height: 1;
+	font-size: 14px;
+	color: #fff;
+	-webkit-transition: all .3s ease;
+	transition: all .3s ease;
+	border-radius: 2px;
+}
+
+.subNav_close {
+    position: absolute;
+    font-size: 24px;
+    width: auto;
+    right: 10px;
+    top: 10px;
+}
+
+.subNav a:hover,
+.subNav a:active,
+.subNav a:focus {
+    background-color: rgba(0, 0, 0, .15)
+}
+
+.subNav.u-open{
+	max-height: 400px;
+	opacity: 1;
+	visibility: visible;
+}
+
+.subNav:nth-child(1).u-open,.nav_link:nth-child(1) a.u-open{
+	background-color: #4285F4;
+}
+
+.subNav:nth-child(2).u-open,.nav_link:nth-child(2) a.u-open{
+	background-color: #EA4235;
+}
+
+.subNav:nth-child(3).u-open,.nav_link:nth-child(3) a.u-open{
+	background-color: #FBBC05;
+}
+
+.subNav:nth-child(4).u-open,.nav_link:nth-child(4) a.u-open{
+	background-color: #34A853;
+}
+
+header{
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	background-image: -webkit-linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.0)), url(../img/bg-header-noise.jpg);
+    background-image: linear-gradient(to bottom, rgba(0,0,0,.3), rgba(0,0,0,0)), url(../img/bg-header-noise.jpg);
+    background-repeat: repeat-x, repeat;
+    background-size: 100px 15px, 140px 140px;
+	height: 150px;
+	width: 100%;
+}
+body{
+	background: url('../img/dark-grey-tile.png');
+	color: #262626;
+	padding: 0;
+	margin: 0;
+	font-family: "Helvetica Neue","Helvetica",Helvetica,Arial,sans-serif;
+	font-weight: 400;
+	font-style: normal;
+	line-height: 1;
+	position: relative;
+	cursor: default;
+}
+
+iframe{
+	position: relative;
+    height: 101%;
+    width: 102%;
+    overflow: hidden;
+}
+
+a {
+	color: #1c94c6;
+	text-decoration: none;
+	line-height: inherit;
+}
+
+#sticky.stick {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 10000;
+    border-radius: 0 0 0.5em 0.5em;
+}
+
+.content {
+    margin: 0px auto;
+    position: relative;
+    width: 1300px;
+    height: 1800px;
+}
+
+.logo {
+    width: 218px;
+    margin-left: 100px;
+    margin-top: 5px;
+}
+
+.filler{
+	width: 100%;
+	height: 54px;
+	background: #303236;
+	display: none;
+}
+
+.nav_link{
+	display: inline-block;
+	text-transform: uppercase;
+	width: 9.7%;
+	text-align: center;
+	font-weight: 500;
+	-webkit-box-flex: 1;
+	-webkit-flex-grow: 1;
+	-ms-flex-positive: 1;
+	flex-grow: 1;
+	vertical-align: middle;
+	max-height: 54px;
+}
+
+.nav_link a{
+	background-color: #303236;
+    width: 100%;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 14px;
+    height: 54px;
+    line-height: 15px;
+    font-weight: 700;
+}
+.nav_link:nth-child(1) a:hover{
+	background-color: #4285F4;
+}
+
+.nav_link:nth-child(2) a:hover{
+	background-color: #EA4235;
+}
+
+.nav_link:nth-child(3) a:hover{
+	background-color: #FBBC05;
+}
+
+.nav_link:nth-child(4) a:hover{
+	background-color: #34A853;
+}
+
+.nav_link, .nav_link a{
+	-webkit-transition: all .3s ease;
+	transition: all .3s ease;
+}

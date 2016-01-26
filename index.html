@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<title>PPD TEMPLATE GENERATOR</title>
+		<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/style.css">
+	</head>
+	<body>		
+		<header id="head">
+			<canvas id="canvas" style="position:absolute; top:0; left:0;"></canvas>
+			<div id="buffer" style="display:none;">
+		</header>
+		<div id="sticky-anchor"></div>
+		<div id="filler" class="filler"></div>
+		<div id="sticky">
+			<nav>
+				<ul>
+					<li id="nav-youtube" class="nav_link"><a href="#" onClick="navClick('nav-youtube','subNav-youtube');">YOUTUBE</a></li>
+					<li id="nav-video" class="nav_link"><a href="#" onClick="navClick('nav-video','subNav-video');">VIDEO</a></li>
+					<li id="nav-lightbox" class="nav_link"><a href="#" onClick="navClick('nav-lightbox','subNav-lightbox');">LIGHTBOX</a></li>
+					<li id="nav-dateswap" class="nav_link"><a href="#" onClick="navClick('nav-dateswap','subNav-dateswap');">PIXEL</a></li>
+				</ul>
+				<div class="subNavs u-closed">
+					<div id="subNav-youtube" class="subNav youtube">
+						<div class="subNav_inner">
+							<a class="subNav_close" href="#" onclick="navClick('nav-youtube','subNav-youtube');"><span>X</span></a>
+							<a href="#" id="plain-yotube">Generator</a>
+							<a href="https://drive.google.com/a/google.com/folderview?id=0BywpeBqgFmAjQ0pZb2huYm9xSDA&usp=sharing" id="gwd-yotube" target="_blank">Components</a>
+						</div>
+					</div>
+					<div id="subNav-video" class="subNav video">
+						<div class="subNav_inner">
+							<a class="subNav_close" href="#" onclick="navClick('nav-video','subNav-video');"><span>X</span></a>
+							<a href="#">Coming soon</a>
+						</div>
+					</div>
+					<div id="subNav-lightbox" class="subNav lightbox">
+						<div class="subNav_inner">
+							<a class="subNav_close" href="#" onclick="navClick('nav-lightbox','subNav-lightbox');"><span>X</span></a>
+							<a href="#">Coming soon</a>
+						</div>
+					</div>
+					<div id="subNav-dateswap" class="subNav dateswap">
+						<div class="subNav_inner">
+							<a class="subNav_close" href="#" onclick="navClick('nav-dateswap','subNav-dateswap');"><span>X</span></a>
+							<a href="#">Coming soon</a>
+						</div>
+					</div>
+				</div>
+			</nav>
+		</div>
+		<div class="content">
+			<iframe id="iframe" frameborder="0"></iframe>
+		</div>
+		<script src="js/main.js"></script>
+		<script src='js/canvas-animation.js'></script> 
+	</body>
+</html>

@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<title>YOUTUBE TEMPLATE GENERATOR</title>
+		<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+		<link href='https://fonts.googleapis.com/css?family=Roboto+Slab:700' rel='stylesheet' type='text/css'>
+		<link href='css/style.css' rel='stylesheet' type='text/css'>
+	</head>
+	<body>		
+		<div class="container">
+			<header>YOU<span>TUBE</span></header> 
+			<form class="counters_form" action="" method="post" name="counters_form">
+				<table>
+					<tr>
+						<td>
+							<nav>
+								<ul>
+									<li id="nav-youtube-dynamic" class="nav_videos">
+										<a id = "dynNav" href="#">
+											<input type="checkbox" id="dyn" name="cc" />
+											<label for="dyn"><span></span>Dynamic</label>
+										</a>
+									</li>
+									<li id="nav-youtube-intro" class="nav_videos">
+										<a id = "c1Nav" href="#">
+											<input type="checkbox" id="c1" name="cc" />
+											<label for="c1"><span></span>Inpage</label>
+										</a>
+									</li>
+									<li id="nav-youtube-multi" class="nav_videos">
+										<a id = "c2Nav" href="#">
+											<input type="checkbox" id="c2" name="cc" />
+											<label for="c2"><span></span>Expanding</label>
+										</a>
+									</li>
+								</ul>
+							</nav>
+							<div id="dynVideo" class="videoMenu">
+								<h3>Dynamic Invocation Code</h3>
+								<ul>
+									<li>
+										<textarea id="invocation" class="required" name="invocation" cols="20" rows="10" required></textarea>
+									</li>
+								</ul>
+								<div class="or-spacer">
+								  <div class="mask"></div>
+								</div>
+							</div>
+							<div id="c1Video" class="videoMenu">
+								<h3>Inpage Video/s</h3>
+								<ul>
+									<li>
+										<label for="number">How many videos:</label>
+	       		 						<input id="videoInpageCount" class="required" type="text" name="number" placeholder="Number of videos. 1-5 only" maxlength="1" onclick="select()" required/>
+									</li>
+									<li>
+										<label for="format">Device Format:</label>
+										<select class="videoInpageFormat" name="format">
+											<option value="desktop">Desktop</option>
+											<option value="mobile">Mobile</option>
+										</select>
+									</li>
+								</ul>
+								<ul id="videoInpageList"></ul>
+								<div class="or-spacer">
+								  <div class="mask"></div>
+								</div>
+							</div>
+							<div id="c2Video" class="videoMenu">
+								<h3>Expand Video/s</h3>
+								<ul>
+									<li>
+										<label for="number">How many videos:</label>
+	       		 						<input id="videoExpandCount" class="required" type="text" name="number" placeholder="Number of videos. 1-5 only" maxlength="1" onclick="select()" required/>
+									</li>	
+								</ul>
+								<ul id="videoExpandList"></ul>
+								<div class="or-spacer">
+								  <div class="mask"></div>
+								</div>
+							</div>
+							<div id="submit" class="submit" type="submit" value="Submit">Generate</div>
+						</td>
+						<td>
+							<h3>Generated Code</h3>
+							<ul>
+								<li>
+									<textarea id="codeGenerated"name="codeGenerated" cols="40" rows="44"></textarea>
+								</li>	
+							</ul>
+							<a id="download" class="download">Download</a>
+						</td>
+					</tr>
+				</table>
+			</form>
+			<div class="message" id="message"></div>
+		</div>
+	</body>
+	<script src='js/script.js'></script>
+</html>
