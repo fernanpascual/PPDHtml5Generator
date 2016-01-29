@@ -240,6 +240,10 @@ input[type="checkbox"]:checked + label span {
 	transition: all .3s ease;
 }
 
+#dynVideo {
+    display: none !important;
+}
+
 .show {
 	display: block;
 }
