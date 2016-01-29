@@ -48,10 +48,10 @@ function manifestContent(e,s){
 		var a,b,c;
 		if(i == 1 && s == 'videoInpageList'){
 			a = '<li id="pDuration"></li>';
-			b = '<select class="' + s + '" name="pState'+ i +'" id="play'+ i +'" onchange="changeListHandler(this)"><option value="standard">Standard</option><option value="preview">Preview</option><option value="none">None</option><option value="intro">Intro</option></select>';
+			b = '<select class="' + s + '" name="pState'+ i +'" id="play'+ i +'" onchange="changeListHandler(this)"><option value="none">None</option><option value="standard">Standard</option><option value="preview">Preview</option><option value="intro">Intro</option></select>';
 		}else{
 			a = '';
-			b = '<select class="' + s + '" name="pState'+ i +'" id="play'+ i +'" onchange="changeListHandler(this)"><option value="standard">Standard</option><option value="none">None</option><option value="intro">Intro</option></select>';
+			b = '<select class="' + s + '" name="pState'+ i +'" id="play'+ i +'" onchange="changeListHandler(this)"><option value="none">None</option><option value="standard">Standard</option><option value="intro">Intro</option></select>';
 		}
 		content += "<li>"+
 						"<label>Youtube ID "+ i +":</label>"+
