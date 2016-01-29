@@ -51,7 +51,7 @@ function manifestContent(e,s){
 			b = '<select class="' + s + '" name="pState'+ i +'" id="play'+ i +'" onchange="changeListHandler(this)"><option value="standard">Standard</option><option value="preview">Preview</option><option value="none">None</option><option value="intro">Intro</option></select>';
 		}else{
 			a = '';
-			b = '<select class="' + s + '" name="pState'+ i +'" id="play'+ i +'"><option value="standard">Standard</option><option value="none">None</option><option value="intro">Intro</option></select>';
+			b = '<select class="' + s + '" name="pState'+ i +'" id="play'+ i +'" onchange="changeListHandler(this)"><option value="standard">Standard</option><option value="none">None</option><option value="intro">Intro</option></select>';
 		}
 		content += "<li>"+
 						"<label>Youtube ID "+ i +":</label>"+
@@ -69,7 +69,7 @@ function manifestContent(e,s){
 					"<h3>Tracking Metrics</h3>"+
 					"<ul id='tracking-list-autoplay"+ i +"' class='counters'>"+
 					"</ul>"+
-					"<ul id='tracking-list' class='counters'>"+
+					"<ul id='tracking-list' class='counters hideForIntroplay"+i+"'>"+
 						"<li>"+
 							"<input id='ePlayCounter"+ i +"' type='text' placeholder='ex: YT_INP_Engaged_Video1_Play_Ctr'>"+
 							"<input id='e25Counter"+ i +"' type='text' placeholder='ex: YT_INP_Engaged_Video1_25%_Ctr'>"+
@@ -81,7 +81,7 @@ function manifestContent(e,s){
 							"<input id='ePauseCounter"+ i +"' type='text' placeholder='ex: YT_INP_Engaged_Video1_Pause_Ctr'>"+
 							"<input id='eReplayCounter"+ i +"' type='text' placeholder='ex: YT_INP_Engaged_Video1_Replay_Ctr'>"+
 							"<input id='eVideoTimer"+ i +"' type='text' placeholder='ex: YT_INP_Engaged_Video1_Timer'>"+
-							"<input id='pCloseAdCounter"+ i +"' type='text' placeholder='ex: CloseAd_Ctr'>"+
+							//"<input id='pCloseAdCounter"+ i +"' type='text' placeholder='ex: CloseAd_Ctr'>"+
 						"</li>"+
 					"</ul>";
 	}
@@ -111,7 +111,8 @@ function changeListHandler(s){
 	var a = s.id,
 		b = document.querySelector('#tracking-list-autoplay1'),
 		c = document.querySelector('#pDuration'),
-		d = "<li>"+
+		d = document.querySelector('.hideForIntro'+a)
+		e = "<li>"+
 				"<input id='p0Counter1' class='preview1' type='text' placeholder='ex: YT_INP_Autoplay_Video1_0%_Ctr'/>"+
 				"<input id='p25Counter1' class='preview2' type='text' placeholder='ex: YT_INP_Autoplay_Video1_25%_Ctr'/>"+
 				"<input id='p50Counter1' class='preview3' type='text' placeholder='ex: YT_INP_Autoplay_Video1_50%_Ctr'/>"+
@@ -122,12 +123,18 @@ function changeListHandler(s){
 				"<input id='pCFSCounter1' class='preview6' type='text' placeholder='ex: YT_INP_Autoplay_Video1_ClickForSound_Ctr'/>"+
 				"<input id='pVideoTimer1' class='preview7' type='text' placeholder='ex: YT_INP_Autoplay_Video1_Timer'/>"+
 			"</li>",
-		e = '<label for="duration">Preview Duration:</label><input id="videoInpagePreviewDuration" class="required"type="text" name="duration" placeholder="Duration of the preview. ex: 15" maxlength="2" onclick="select()" required/>';
+		f = '<label for="duration">Preview Duration:</label><input id="videoInpagePreviewDuration" class="required"type="text" name="duration" placeholder="Duration of the preview. ex: 15" maxlength="2" onclick="select()" required/>';
 
 	if(s.value == "preview" && a == "play1"){
-		b.innerHTML = d;
-		c.innerHTML = e;
+		d.style.display = 'block';
+		b.innerHTML = e;
+		c.innerHTML = f;
+	}else if(s.value == "intro"){
+		d.style.display = 'none';
+		b.innerHTML = '';
+		c.innerHTML = '';
 	}else{
+		d.style.display = 'block';
 		b.innerHTML = '';
 		c.innerHTML = '';
 	}
@@ -138,7 +145,7 @@ function changeListHandler(s){
 function generateCode(){
 	if(document.getElementById('dyn').checked){
 		isDynamic = true;
-		dynamicInvo = document.counters_form.invocation.value;
+		dynamicInvo = '';//document.counters_form.invocation.value;
 	}else{
 		isDynamic = false;
 		dynamicInvo = '';
@@ -201,7 +208,7 @@ function populateInpageVideos(){
 	}
 	var z = document.querySelector('.videoInpageFormat')
 	isMobile = (z.options[z.selectedIndex].value == "mobile") ? true : false;
-	closeAdTrackings = document.querySelector('#videoInpageList #tracking-list #pCloseAdCounter1').value;
+	//closeAdTrackings = document.querySelector('#videoInpageList #tracking-list #pCloseAdCounter1').value;
 }
 
 function populateExpandVideos(){
@@ -261,7 +268,7 @@ function showMessage(message){
 function injectCode(){
 	var a = videoInpageCount.value,
 		b = videoExpandCount.value,
-		c = document.getElementById('dyn').checked ? ("//Dynamic Invocation Code\n"+ dynamicInvo + "\n\n") : '',
+		c = '',//document.getElementById('dyn').checked ? ("//Dynamic Invocation Code\n"+ dynamicInvo + "\n\n") : '',
 		d = c +
 			"var vidInpageList = ["+ vidInpage +"],\n\t" +
 				"containerInpageList = ["+ containerInpage +"],\n\t" +
@@ -274,27 +281,14 @@ function injectCode(){
 			"TRACKING_METRICS_PREVIEWED_PERCENT_50 : "+ previewTrackings[2] +",\n\t" +
 			"TRACKING_METRICS_PREVIEWED_PERCENT_75 : "+ previewTrackings[3] +",\n\t" +
 			"TRACKING_METRICS_PREVIEWED_PERCENT_100 : "+ previewTrackings[4] +",\n\t" +
-			"TRACKING_METRICS_PREVIEWED_TIMER : "+ previewTrackings[6] +",\n\t";
-		g = "/*#####################  HOW TO USE  ####################*/\n" +
-			"// --If you are using GWD, delete all the youtube component then copy all the gwdyoutube_min.js,\n" +
-			"// ytController.js and ytSetup.js and paste it to your GWD campaign folder.\n" +
-			"// --For Plain Vanilla, delete/comment out all the import and javascript YT codes.\n" +
-			"// --Import gwdyoutube_min.js and ytController.js file after the enabler.\n" +
-			"// Example:\n" +
-			"//	<script src='http://s0.2mdn.net/ads/studio/Enabler.js'><"+'/script'+">\n" +
-			"//	<script src='gwdyoutube_min.js'><"+'/script'+">\n" +
-			"//	<script src='ytController.js'><"+'/script'+">\n" +
-			"// --Import the downloaded ytSetup.js at after the </body> tag.\n" +
-			"// Example:\n" +
-			"//	<"+'/body'+">\n" +
-			"//	<script src='ytSetup.js'><"+'/script'+">\n" +
-			"//\n" +
-			"// Create a div container with same position and size as the original asset's youtube video.\n" +
-			"// Call the function ytpInp1.createYT(); to create the yt video.\n" +
-			"// Call the function ytpInp1.destroyYT(); to destroy the yt video.\n\n";
-	code += g+d;
+			"TRACKING_METRICS_PREVIEWED_TIMER : "+ previewTrackings[6] +",\n\t",
+		g = "TRACKING_METRICS_CLICK_FOR_SOUND : "+ previewTrackings[5] +",\n\t",
+		h = "PREVIEW_DURATION : " + "'" + previewDuration + "'" +",\n\t";
+	code += d;
 	for(var i = 1; a>=i; i++){
 		f = (i==1) ? f : '';
+		g = (i==1) ? g : '';
+		h = (previewDuration != '') ? h : '';
 		var codeInput = "//Inpage YT video"+ i +"\n" +
 			"var playerInp" + i + " = {\n\t" +
 				"ID : 'ytpInp" + i + "',\n\t" +
@@ -302,7 +296,7 @@ function injectCode(){
 				"_URL : vidInpageList[" + (i-1) + "],\n\t" +
 				"AUTOPLAY : playStateInpageList[" + (i-1) + "],\n\t" +
 				"// INTRO_HIDE : true,\n\t" +
-				"PREVIEW_DURATION : " + "'" + previewDuration + "'" +",\n\t" +
+				h +
 				"PAUSE_ON_START : false,\n\t" +
 				"MUTED : false,\n\t" +
 				"CONTROLS : '',\n\t" +
@@ -312,7 +306,7 @@ function injectCode(){
 				"TRACKING_METRICS_PAUSE : "+ "'" + engageInpTrackings[i-1][5] + "'" +",\n\t" +
 				"TRACKING_METRICS_ENDED : '',\n\t" +
 				"TRACKING_METRICS_REPLAY : "+ "'" + engageInpTrackings[i-1][6] + "'" +",\n\t" +
-				"TRACKING_METRICS_CLICK_FOR_SOUND : "+ previewTrackings[5] +",\n\t" +
+				g +
 				"TRACKING_METRICS_VIEWED_PERCENT_0 : '',\n\t" +
 				"TRACKING_METRICS_VIEWED_PERCENT_25 : "+ "'" + engageInpTrackings[i-1][1] + "'" +",\n\t" +
 				"TRACKING_METRICS_VIEWED_PERCENT_50 : "+ "'" + engageInpTrackings[i-1][2] + "'" +",\n\t" +
@@ -320,10 +314,7 @@ function injectCode(){
 				"TRACKING_METRICS_VIEWED_PERCENT_100 : "+ "'" + engageInpTrackings[i-1][4] + "'" +",\n\t" +
 				"TRACKING_METRICS_VIEWED_TIMER : "+ "'" + engageInpTrackings[i-1][7] + "'" +",\n\t" +
 				f +
-				"TRACKING_METRICS_CLOSE_AD : '" + closeAdTrackings + "',\n\t" +
-				"EVENTS_PREVIEWED_100 : function(){\n\t\t" +
-				"console.log('EVENTS_PREVIEW_ENDED');\n\t" +
-				"},\n\t" +
+				//"TRACKING_METRICS_CLOSE_AD : '" + closeAdTrackings + "',\n\t" +
 				"PAUSE_ON_EXPAND : true,\n\t" +
 				"DESTROY_ON_COLLAPSE : true\n" +
 			"};\n\n" +
@@ -347,7 +338,6 @@ function injectCode(){
 				"_URL : vidExpandList[" + (i-1) + "],\n\t" +
 				"AUTOPLAY : playStateExpandList[" + (i-1) + "],\n\t" +
 				"// INTRO_HIDE : true,\n\t" +
-				"PREVIEW_DURATION : " + "'" + previewDuration + "'" +",\n\t" +
 				"PAUSE_ON_START : false,\n\t" +
 				"MUTED : false,\n\t" +
 				"CONTROLS : '',\n\t" +
@@ -363,10 +353,7 @@ function injectCode(){
 				"TRACKING_METRICS_VIEWED_PERCENT_75 : "+ "'" + engageExpTrackings[i-1][3] + "'" +",\n\t" +
 				"TRACKING_METRICS_VIEWED_PERCENT_100 : "+ "'" + engageExpTrackings[i-1][4] + "'" +",\n\t" +
 				"TRACKING_METRICS_VIEWED_TIMER : "+ "'" + engageExpTrackings[i-1][7] + "'" +",\n\t" +
-				"TRACKING_METRICS_CLOSE_AD : '" + closeAdTrackings + "',\n\t" +
-				"EVENTS_PREVIEWED_100 : function(){\n\t\t" +
-				"console.log('EVENTS_PREVIEW_ENDED');\n\t" +
-				"},\n\t" +
+				//"TRACKING_METRICS_CLOSE_AD : '" + closeAdTrackings + "',\n\t" +
 				"PAUSE_ON_EXPAND : true,\n\t" +
 				"DESTROY_ON_COLLAPSE : true\n" +
 			"};\n\n" +
