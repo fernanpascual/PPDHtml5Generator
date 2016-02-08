@@ -7,6 +7,7 @@ var vidInpage = [],
 	previewTrackings = [],
 	engageInpTrackings = [],
 	engageExpTrackings = [],
+	ytControllerList = [],
 	closeAdTrackings = "",
 	previewDuration,
 	code,
@@ -14,6 +15,7 @@ var vidInpage = [],
 	dynamicInvo = "",
 	isDynamic = false,
 	isMobile = false,
+	autoCreate = false,
 	videoInpageCount = document.getElementById("videoInpageCount"),
 	videoExpandCount = document.getElementById("videoExpandCount");
 
@@ -71,16 +73,16 @@ function manifestContent(e,s){
 					"</ul>"+
 					"<ul id='tracking-list' class='counters hideForIntroplay"+i+"'>"+
 						"<li>"+
-							"<input id='ePlayCounter"+ i +"' type='text' placeholder='ex: YT_INP_Engaged_Video1_Play_Ctr'>"+
-							"<input id='e25Counter"+ i +"' type='text' placeholder='ex: YT_INP_Engaged_Video1_25%_Ctr'>"+
-							"<input id='e50Counter"+ i +"' type='text' placeholder='ex: YT_INP_Engaged_Video1_50%_Ctr'>"+
-							"<input id='e75Counter"+ i +"' type='text' placeholder='ex: YT_INP_Engaged_Video1_75%_Ctr'>"+
-							"<input id='e100Counter"+ i +"' type='text' placeholder='ex: YT_INP_Engaged_Video1_100%_Ctr'>"+
+							"<input id='ePlayCounter"+ i +"' class='counter_tracker' type='text' placeholder='ex: YT_INP_Engaged_Video1_Play_Ctr'>"+
+							"<input id='e25Counter"+ i +"' class='counter_tracker' type='text' placeholder='ex: YT_INP_Engaged_Video1_25%_Ctr'>"+
+							"<input id='e50Counter"+ i +"' class='counter_tracker' type='text' placeholder='ex: YT_INP_Engaged_Video1_50%_Ctr'>"+
+							"<input id='e75Counter"+ i +"' class='counter_tracker' type='text' placeholder='ex: YT_INP_Engaged_Video1_75%_Ctr'>"+
+							"<input id='e100Counter"+ i +"' class='counter_tracker' type='text' placeholder='ex: YT_INP_Engaged_Video1_100%_Ctr'>"+
 						"</li>"+
 						"<li>"+
-							"<input id='ePauseCounter"+ i +"' type='text' placeholder='ex: YT_INP_Engaged_Video1_Pause_Ctr'>"+
-							"<input id='eReplayCounter"+ i +"' type='text' placeholder='ex: YT_INP_Engaged_Video1_Replay_Ctr'>"+
-							"<input id='eVideoTimer"+ i +"' type='text' placeholder='ex: YT_INP_Engaged_Video1_Timer'>"+
+							"<input id='ePauseCounter"+ i +"' class='counter_tracker' type='text' placeholder='ex: YT_INP_Engaged_Video1_Pause_Ctr'>"+
+							"<input id='eReplayCounter"+ i +"' class='counter_tracker' type='text' placeholder='ex: YT_INP_Engaged_Video1_Replay_Ctr'>"+
+							"<input id='eVideoTimer"+ i +"' class='timer_tracker' type='text' placeholder='ex: YT_INP_Engaged_Video1_Timer'>"+
 							//"<input id='pCloseAdCounter"+ i +"' type='text' placeholder='ex: CloseAd_Ctr'>"+
 						"</li>"+
 					"</ul>";
@@ -113,15 +115,15 @@ function changeListHandler(s){
 		c = document.querySelector('#pDuration'),
 		d = document.querySelector('.hideForIntro'+a)
 		e = "<li>"+
-				"<input id='p0Counter1' class='preview1' type='text' placeholder='ex: YT_INP_Autoplay_Video1_0%_Ctr'/>"+
-				"<input id='p25Counter1' class='preview2' type='text' placeholder='ex: YT_INP_Autoplay_Video1_25%_Ctr'/>"+
-				"<input id='p50Counter1' class='preview3' type='text' placeholder='ex: YT_INP_Autoplay_Video1_50%_Ctr'/>"+
-				"<input id='p75Counter1' class='preview4' type='text' placeholder='ex: YT_INP_Autoplay_Video1_75%_Ctr'/>"+
-				"<input id='p100Counter1' class='preview5' type='text' placeholder='ex: YT_INP_Autoplay_Video1_100%_Ctr'/>"+
+				"<input id='p0Counter1' class='preview1 counter_tracker' type='text' placeholder='ex: YT_INP_Autoplay_Video1_0%_Ctr'/>"+
+				"<input id='p25Counter1' class='preview2 counter_tracker' type='text' placeholder='ex: YT_INP_Autoplay_Video1_25%_Ctr'/>"+
+				"<input id='p50Counter1' class='preview3 counter_tracker' type='text' placeholder='ex: YT_INP_Autoplay_Video1_50%_Ctr'/>"+
+				"<input id='p75Counter1' class='preview4 counter_tracker' type='text' placeholder='ex: YT_INP_Autoplay_Video1_75%_Ctr'/>"+
+				"<input id='p100Counter1' class='preview5 counter_tracker' type='text' placeholder='ex: YT_INP_Autoplay_Video1_100%_Ctr'/>"+
 			"</li>"+
 			"<li>"+
-				"<input id='pCFSCounter1' class='preview6' type='text' placeholder='ex: YT_INP_Autoplay_Video1_ClickForSound_Ctr'/>"+
-				"<input id='pVideoTimer1' class='preview7' type='text' placeholder='ex: YT_INP_Autoplay_Video1_Timer'/>"+
+				"<input id='pCFSCounter1' class='preview6 counter_tracker' type='text' placeholder='ex: YT_INP_Autoplay_Video1_ClickForSound_Ctr'/>"+
+				"<input id='pVideoTimer1' class='preview7 timer_tracker' type='text' placeholder='ex: YT_INP_Autoplay_Video1_Timer'/>"+
 			"</li>",
 		f = '<label for="duration">Preview Duration:</label><input id="videoInpagePreviewDuration" class="required"type="text" name="duration" placeholder="Duration of the preview. ex: 15" maxlength="2" onclick="select()" required/>';
 
@@ -145,7 +147,7 @@ function changeListHandler(s){
 function generateCode(){
 	if(document.getElementById('dyn').checked){
 		isDynamic = true;
-		dynamicInvo = '';//document.counters_form.invocation.value;
+		dynamicInvo = document.counters_form.invocation.value;
 	}else{
 		isDynamic = false;
 		dynamicInvo = '';
@@ -154,6 +156,8 @@ function generateCode(){
 	populateInpageVideos();
 	populateExpandVideos();
 	injectCode();
+	trackerRegister();
+	createDestroyEvent();
 	document.counters_form.codeGenerated.value = code;
 	vidInpage.length = 0;
 	vidExpand.length = 0;
@@ -164,6 +168,7 @@ function generateCode(){
 	previewTrackings.length = 0;
 	engageInpTrackings.length = 0;
 	engageExpTrackings.length = 0;
+	ytControllerList.length = 0;
 	showMessage('Generate Success');
 }
 
@@ -206,7 +211,9 @@ function populateInpageVideos(){
 		}
 		previewDuration = '';
 	}
-	var z = document.querySelector('.videoInpageFormat')
+	var y = document.querySelector('.videoInpageAutoCreate'),
+		z = document.querySelector('.videoInpageFormat')
+	autoCreate = (y.options[y.selectedIndex].value == "yes") ? true : false;
 	isMobile = (z.options[z.selectedIndex].value == "mobile") ? true : false;
 	//closeAdTrackings = document.querySelector('#videoInpageList #tracking-list #pCloseAdCounter1').value;
 }
@@ -268,99 +275,159 @@ function showMessage(message){
 function injectCode(){
 	var a = videoInpageCount.value,
 		b = videoExpandCount.value,
-		c = '',//document.getElementById('dyn').checked ? ("//Dynamic Invocation Code\n"+ dynamicInvo + "\n\n") : '',
+		c = document.getElementById('dyn').checked ? (dynamicInvo + "\n\n") : '',
 		d = c +
-			"var vidInpageList = ["+ vidInpage +"],\n\t" +
-				"containerInpageList = ["+ containerInpage +"],\n\t" +
+			"window.onload = function() {\n\t" +
+				"if (Enabler.isInitialized()) {\n\t\t" +
+				  	"enablerInitHandler();\n\t" +
+				"} else {\n\t\t" +
+				  	"Enabler.addEventListener(studio.events.StudioEvent.INIT, enablerInitHandler);\n\t" +
+				"}\n\n\t" +
+				"function enablerInitHandler() {\n\t\t" +
+				  	"if (Enabler.isPageLoaded()) {\n\t\t\t" +
+				    	"pageLoadedHandler();\n\t\t" +
+				  	"} else {\n\t\t\t" +
+				    	"Enabler.addEventListener(studio.events.StudioEvent.PAGE_LOADED, pageLoadedHandler);\n\t\t" +
+				  	"}\n\t" +
+				"}\n\t" +
+				"console.log('window loading...');\n" +
+			"}\n\n" +
+			"function pageLoadedHandler() {\n\t" +
+			"console.log('page loaded');\n\t" +
+			"var vidInpageList = ["+ vidInpage +"],\n\t\t" +
+				"containerInpageList = ["+ containerInpage +"],\n\t\t" +
 				"playStateInpageList = ["+ playStateInpage +"];\n",
-		e = "var vidExpandList = ["+ vidExpand +"],\n\t" +
-				"containerExpandList = ["+ containerExpand +"],\n\t" +
-				"playStateExpandList = ["+ playStateExpand +"];\n",
-		f = "TRACKING_METRICS_PREVIEWED_PERCENT_0 : "+ previewTrackings[0] +",\n\t" +
-			"TRACKING_METRICS_PREVIEWED_PERCENT_25 : "+ previewTrackings[1] +",\n\t" +
-			"TRACKING_METRICS_PREVIEWED_PERCENT_50 : "+ previewTrackings[2] +",\n\t" +
-			"TRACKING_METRICS_PREVIEWED_PERCENT_75 : "+ previewTrackings[3] +",\n\t" +
-			"TRACKING_METRICS_PREVIEWED_PERCENT_100 : "+ previewTrackings[4] +",\n\t" +
-			"TRACKING_METRICS_PREVIEWED_TIMER : "+ previewTrackings[6] +",\n\t",
-		g = "TRACKING_METRICS_CLICK_FOR_SOUND : "+ previewTrackings[5] +",\n\t",
-		h = "PREVIEW_DURATION : " + "'" + previewDuration + "'" +",\n\t";
+		e = "\tvar vidExpandList = ["+ vidExpand +"],\n\t\t" +
+				"containerExpandList = ["+ containerExpand +"],\n\t\t" +
+				"playStateExpandList = ["+ playStateExpand +"];\n\t",
+		f = "TRACKING_METRICS_PREVIEWED_PERCENT_0 : "+ previewTrackings[0] +",\n\t\t" +
+			"TRACKING_METRICS_PREVIEWED_PERCENT_25 : "+ previewTrackings[1] +",\n\t\t" +
+			"TRACKING_METRICS_PREVIEWED_PERCENT_50 : "+ previewTrackings[2] +",\n\t\t" +
+			"TRACKING_METRICS_PREVIEWED_PERCENT_75 : "+ previewTrackings[3] +",\n\t\t" +
+			"TRACKING_METRICS_PREVIEWED_PERCENT_100 : "+ previewTrackings[4] +",\n\t\t" +
+			"TRACKING_METRICS_PREVIEWED_TIMER : "+ previewTrackings[6] +",\n\t\t",
+		g = "TRACKING_METRICS_CLICK_FOR_SOUND : "+ previewTrackings[5] +",\n\t\t",
+		h = "PREVIEW_DURATION : " + "'" + previewDuration + "'" +",\n\t\t",
+		k = "var = ",
+		l = "var = ";
 	code += d;
 	for(var i = 1; a>=i; i++){
 		f = (i==1) ? f : '';
 		g = (i==1) ? g : '';
 		h = (previewDuration != '') ? h : '';
-		var codeInput = "//Inpage YT video"+ i +"\n" +
-			"var playerInp" + i + " = {\n\t" +
-				"ID : 'ytpInp" + i + "',\n\t" +
-				"CONTAINER_ID : containerInpageList[" + (i-1) + "],\n\t" +
-				"_URL : vidInpageList[" + (i-1) + "],\n\t" +
-				"AUTOPLAY : playStateInpageList[" + (i-1) + "],\n\t" +
-				"// INTRO_HIDE : true,\n\t" +
+		(i==1) ? (k += "ytpInp" + i) : (k += ',ytpInp' + i);
+		var codeInput = "\t//Inpage YT video"+ i +"\n\t" +
+			"var playerInp" + i + " = {\n\t\t" +
+				"ID : 'ytpInp" + i + "',\n\t\t" +
+				"CONTAINER_ID : containerInpageList[" + (i-1) + "],\n\t\t" +
+				"_URL : vidInpageList[" + (i-1) + "],\n\t\t" +
+				"AUTOPLAY : playStateInpageList[" + (i-1) + "],\n\t\t" +
+				"// INTRO_HIDE : true,\n\t\t" +
 				h +
-				"PAUSE_ON_START : false,\n\t" +
-				"MUTED : false,\n\t" +
-				"CONTROLS : '',\n\t" +
-				"ALLOWFULLSCREEN : false,\n\t" +
-				"IS_MOBILE : " + "'" + isMobile + "'" +",\n\t" +
-				"TRACKING_METRICS_PLAYING : "+ "'" + engageInpTrackings[i-1][0] + "'" +",\n\t" +
-				"TRACKING_METRICS_PAUSE : "+ "'" + engageInpTrackings[i-1][5] + "'" +",\n\t" +
-				"TRACKING_METRICS_ENDED : '',\n\t" +
-				"TRACKING_METRICS_REPLAY : "+ "'" + engageInpTrackings[i-1][6] + "'" +",\n\t" +
+				"PAUSE_ON_START : false,\n\t\t" +
+				"MUTED : false,\n\t\t" +
+				"CONTROLS : '',\n\t\t" +
+				"ALLOWFULLSCREEN : false,\n\t\t" +
+				"IS_MOBILE : " + "'" + isMobile + "'" +",\n\t\t" +
+				"TRACKING_METRICS_PLAYING : "+ "'" + engageInpTrackings[i-1][0] + "'" +",\n\t\t" +
+				"TRACKING_METRICS_PAUSE : "+ "'" + engageInpTrackings[i-1][5] + "'" +",\n\t\t" +
+				"TRACKING_METRICS_ENDED : '',\n\t\t" +
+				"TRACKING_METRICS_REPLAY : "+ "'" + engageInpTrackings[i-1][6] + "'" +",\n\t\t" +
 				g +
-				"TRACKING_METRICS_VIEWED_PERCENT_0 : '',\n\t" +
-				"TRACKING_METRICS_VIEWED_PERCENT_25 : "+ "'" + engageInpTrackings[i-1][1] + "'" +",\n\t" +
-				"TRACKING_METRICS_VIEWED_PERCENT_50 : "+ "'" + engageInpTrackings[i-1][2] + "'" +",\n\t" +
-				"TRACKING_METRICS_VIEWED_PERCENT_75 : "+ "'" + engageInpTrackings[i-1][3] + "'" +",\n\t" +
-				"TRACKING_METRICS_VIEWED_PERCENT_100 : "+ "'" + engageInpTrackings[i-1][4] + "'" +",\n\t" +
-				"TRACKING_METRICS_VIEWED_TIMER : "+ "'" + engageInpTrackings[i-1][7] + "'" +",\n\t" +
+				"TRACKING_METRICS_VIEWED_PERCENT_0 : '',\n\t\t" +
+				"TRACKING_METRICS_VIEWED_PERCENT_25 : "+ "'" + engageInpTrackings[i-1][1] + "'" +",\n\t\t" +
+				"TRACKING_METRICS_VIEWED_PERCENT_50 : "+ "'" + engageInpTrackings[i-1][2] + "'" +",\n\t\t" +
+				"TRACKING_METRICS_VIEWED_PERCENT_75 : "+ "'" + engageInpTrackings[i-1][3] + "'" +",\n\t\t" +
+				"TRACKING_METRICS_VIEWED_PERCENT_100 : "+ "'" + engageInpTrackings[i-1][4] + "'" +",\n\t\t" +
+				"TRACKING_METRICS_VIEWED_TIMER : "+ "'" + engageInpTrackings[i-1][7] + "'" +",\n\t\t" +
 				f +
 				//"TRACKING_METRICS_CLOSE_AD : '" + closeAdTrackings + "',\n\t" +
-				"PAUSE_ON_EXPAND : true,\n\t" +
-				"DESTROY_ON_COLLAPSE : true\n" +
-			"};\n\n" +
-			"var ytpInp" + i + " = new YTController(playerInp" + i + ");\n\n";
+				"PAUSE_ON_EXPAND : true,\n\t\t" +
+				"DESTROY_ON_COLLAPSE : true\n\t" +
+			"};\n\n\t" +
+			"ytpInp" + i + " = new YTController(playerInp" + i + ");\n\n";
 
+		ytControllerList.push("ytpInp" + i);
 		code += codeInput;
 		for(var j=1; j<=previewTrackings.length; j++){
 			previewTrackings[j-1] = '';
 		}
 	};
 
-	if(!document.getElementById('c2').checked) return;
+	if(!document.getElementById('c2').checked){
+		autoCreate && (code += "\tsetTimeout(function(){ytpInp1.createYT()},500);\n");
+		code += "}\n\n" + k;
+		return;
+	}
 
 	code += e;
 
 	for(var i = 1; b>=i; i++){
-		var codeInput = "//Expand YT video"+ i +"\n" +
-			"var playerExp" + i + " = {\n\t" +
-				"ID : 'ytpExp" + i + "',\n\t" +
-				"CONTAINER_ID : containerExpandList[" + (i-1) + "],\n\t" +
-				"_URL : vidExpandList[" + (i-1) + "],\n\t" +
-				"AUTOPLAY : playStateExpandList[" + (i-1) + "],\n\t" +
-				"// INTRO_HIDE : true,\n\t" +
-				"PAUSE_ON_START : false,\n\t" +
-				"MUTED : false,\n\t" +
-				"CONTROLS : '',\n\t" +
-				"ALLOWFULLSCREEN : false,\n\t" +
-				"IS_MOBILE : " + "'" + isMobile + "'" +",\n\t" +
-				"TRACKING_METRICS_PLAYING : "+ "'" + engageExpTrackings[i-1][0] + "'" +",\n\t" +
-				"TRACKING_METRICS_PAUSE : "+ "'" + engageExpTrackings[i-1][5] + "'" +",\n\t" +
-				"TRACKING_METRICS_ENDED : '',\n\t" +
-				"TRACKING_METRICS_REPLAY : "+ "'" + engageExpTrackings[i-1][6] + "'" +",\n\t" +
-				"TRACKING_METRICS_VIEWED_PERCENT_0 : '',\n\t" +
-				"TRACKING_METRICS_VIEWED_PERCENT_25 : "+ "'" + engageExpTrackings[i-1][1] + "'" +",\n\t" +
-				"TRACKING_METRICS_VIEWED_PERCENT_50 : "+ "'" + engageExpTrackings[i-1][2] + "'" +",\n\t" +
-				"TRACKING_METRICS_VIEWED_PERCENT_75 : "+ "'" + engageExpTrackings[i-1][3] + "'" +",\n\t" +
-				"TRACKING_METRICS_VIEWED_PERCENT_100 : "+ "'" + engageExpTrackings[i-1][4] + "'" +",\n\t" +
-				"TRACKING_METRICS_VIEWED_TIMER : "+ "'" + engageExpTrackings[i-1][7] + "'" +",\n\t" +
+		(i==1) ? (l += "ytpExp" + i) : (l += ',ytpExp' + i);
+		var codeInput = "\t//Expand YT video"+ i +"\n\t" +
+			"var playerExp" + i + " = {\n\t\t" +
+				"ID : 'ytpExp" + i + "',\n\t\t" +
+				"CONTAINER_ID : containerExpandList[" + (i-1) + "],\n\t\t" +
+				"_URL : vidExpandList[" + (i-1) + "],\n\t\t" +
+				"AUTOPLAY : playStateExpandList[" + (i-1) + "],\n\t\t" +
+				"// INTRO_HIDE : true,\n\t\t" +
+				"PAUSE_ON_START : false,\n\t\t" +
+				"MUTED : false,\n\t\t" +
+				"CONTROLS : '',\n\t\t" +
+				"ALLOWFULLSCREEN : false,\n\t\t" +
+				"IS_MOBILE : " + "'" + isMobile + "'" +",\n\t\t" +
+				"TRACKING_METRICS_PLAYING : "+ "'" + engageExpTrackings[i-1][0] + "'" +",\n\t\t" +
+				"TRACKING_METRICS_PAUSE : "+ "'" + engageExpTrackings[i-1][5] + "'" +",\n\t\t" +
+				"TRACKING_METRICS_ENDED : '',\n\t\t" +
+				"TRACKING_METRICS_REPLAY : "+ "'" + engageExpTrackings[i-1][6] + "'" +",\n\t\t" +
+				"TRACKING_METRICS_VIEWED_PERCENT_0 : '',\n\t\t" +
+				"TRACKING_METRICS_VIEWED_PERCENT_25 : "+ "'" + engageExpTrackings[i-1][1] + "'" +",\n\t\t" +
+				"TRACKING_METRICS_VIEWED_PERCENT_50 : "+ "'" + engageExpTrackings[i-1][2] + "'" +",\n\t\t" +
+				"TRACKING_METRICS_VIEWED_PERCENT_75 : "+ "'" + engageExpTrackings[i-1][3] + "'" +",\n\t\t" +
+				"TRACKING_METRICS_VIEWED_PERCENT_100 : "+ "'" + engageExpTrackings[i-1][4] + "'" +",\n\t\t" +
+				"TRACKING_METRICS_VIEWED_TIMER : "+ "'" + engageExpTrackings[i-1][7] + "'" +",\n\t\t" +
 				//"TRACKING_METRICS_CLOSE_AD : '" + closeAdTrackings + "',\n\t" +
-				"PAUSE_ON_EXPAND : true,\n\t" +
-				"DESTROY_ON_COLLAPSE : true\n" +
-			"};\n\n" +
-			"var ytpExp" + i + " = new YTController(playerExp" + i + ");\n\n";
+				"PAUSE_ON_EXPAND : true,\n\t\t" +
+				"DESTROY_ON_COLLAPSE : true\n\t" +
+			"};\n\n\t" +
+			"ytpExp" + i + " = new YTController(playerExp" + i + ");\n\n";
 
-			code += codeInput;
+		ytControllerList.push("ytpExp" + i);
+		code += codeInput;
 	};
+	autoCreate && (code += "\tsetTimeout(function(){ytpInp1.createYT()},500);\n");
+	code += "}\n\n" + k + "\n" + l;
+}
+
+function trackerRegister(){
+	var a = document.querySelectorAll('#tracking-list li input.counter_tracker'),
+		b = document.querySelectorAll('#tracking-list li input.timer_tracker'),
+		c = "\n\nfunction registerTrackings(){\n\t" + 
+			"return;\n";
+
+	code += c;
+	for(var i = 0; a.length>i; i++){
+		if(a[i].value != ""){
+			code += "\tEnabler.counter(" + "'" + a[i].value + "'" + ");\n";
+		}
+	}
+	for(var i = 0; b.length>i; i++){
+		if(b[i].value != ""){
+			code += "\tEnabler.StartTimer(" + "'" + b[i].value + "'" + ");\n";
+		}
+	}
+	code += "}";
+}
+
+function createDestroyEvent(){
+	var a = ytControllerList,
+		b = "\n\nfunction destroyAllYTPlayer(){";
+
+	code += b;
+	for(var i = 0; a.length>i; i++){
+		code += "\n\ttry{" + a[i] + ".destroyYT()}catch(e){};";
+	}
+	code += "\n}";
 }
 
 function downloadCode(){
@@ -396,9 +463,7 @@ Download.save = function(data, name){
 
 jQuery.fn.center = function () {
     this.css("position","absolute");
-    this.css("top", Math.max(0, (($(window).height() - $(this).outerHeight()) / 2) + 
-                                                $(window).scrollTop()) + "px");
-    this.css("left", Math.max(0, (($(window).width() - $(this).outerWidth()) / 2) + 
-                                                $(window).scrollLeft()) + "px");
+    this.css("top", Math.max(0, (($(window).height() - $(this).outerHeight()) / 2) + $(window).scrollTop()) + "px");
+    this.css("left", Math.max(0, (($(window).width() - $(this).outerWidth()) / 2) + $(window).scrollLeft()) + "px");
     return this;
 }

@@ -39,7 +39,7 @@
 								<h3>Dynamic Invocation Code</h3>
 								<ul>
 									<li>
-										<textarea id="invocation" name="invocation" cols="20" rows="10" required></textarea>
+										<textarea id="invocation" class="required" name="invocation" cols="20" rows="10" required></textarea>
 									</li>
 								</ul>
 								<div class="or-spacer">
@@ -59,6 +59,14 @@
 											<option value="desktop">Desktop</option>
 											<option value="mobile">Mobile</option>
 										</select>
+									</li>
+									<li>
+										<label for="autoCreate">Auto Create:</label>
+										<select class="videoInpageAutoCreate" name="autoCreate">
+											<option value="no">No</option>
+											<option value="yes">Yes</option>
+										</select>
+										<p>*Selecting Yes will automatically create the first video upon pageload.</p>
 									</li>
 								</ul>
 								<ul id="videoInpageList"></ul>

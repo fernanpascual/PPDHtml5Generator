@@ -80,6 +80,12 @@ nav {
 
 select {
     margin-top: 7px;
+    width: 75px;
+    margin-right: 10px;
+}
+
+.videoInpageAutoCreate{
+	float: left;
 }
 
 .nav_videos{
@@ -240,9 +246,15 @@ input[type="checkbox"]:checked + label span {
 	transition: all .3s ease;
 }
 
-#dynVideo {
-    display: none !important;
+.videoMenu li p{
+	font-size: 10px;
+	font-style: italic;
+    display: inline-block;
 }
+
+/*#dynVideo {
+    display: none !important;
+}*/
 
 .show {
 	display: block;
