@@ -308,8 +308,8 @@ function injectCode(){
 			"TRACKING_METRICS_PREVIEWED_TIMER : "+ previewTrackings[6] +",\n\t\t",
 		g = "TRACKING_METRICS_CLICK_FOR_SOUND : "+ previewTrackings[5] +",\n\t\t",
 		h = "PREVIEW_DURATION : " + "'" + previewDuration + "'" +",\n\t\t",
-		k = "var = ",
-		l = "var = ";
+		k = "var ",
+		l = "var ";
 	code += d;
 	for(var i = 1; a>=i; i++){
 		f = (i==1) ? f : '';
