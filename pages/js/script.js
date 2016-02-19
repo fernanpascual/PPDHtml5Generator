@@ -402,18 +402,33 @@ function injectCode(){
 function trackerRegister(){
 	var a = document.querySelectorAll('#tracking-list li input.counter_tracker'),
 		b = document.querySelectorAll('#tracking-list li input.timer_tracker'),
-		c = "\n\nfunction registerTrackings(){\n\t" + 
+		c = document.querySelectorAll('#tracking-list-autoplay1 li input.counter_tracker'),
+		d = document.querySelectorAll('#tracking-list-autoplay1 li input.timer_tracker'),
+		e = "\n\nfunction registerTrackings(){\n\t" + 
 			"return;\n";
 
-	code += c;
+	code += e;
 	for(var i = 0; a.length>i; i++){
 		if(a[i].value != ""){
 			code += "\tEnabler.counter(" + "'" + a[i].value + "'" + ");\n";
 		}
 	}
+
+	for(var i = 0; c.length>i; i++){
+		if(c[i].value != "" && c != null){
+			code += "\tEnabler.counter(" + "'" + c[i].value + "'" + ");\n";
+		}
+	}
+
 	for(var i = 0; b.length>i; i++){
 		if(b[i].value != ""){
 			code += "\tEnabler.StartTimer(" + "'" + b[i].value + "'" + ");\n";
+		}
+	}
+
+	for(var i = 0; d.length>i; i++){
+		if(d[i].value != "" && d != null){
+			code += "\tEnabler.StartTimer(" + "'" + d[i].value + "'" + ");\n";
 		}
 	}
 	code += "}";
