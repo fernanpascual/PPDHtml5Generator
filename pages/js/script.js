@@ -354,6 +354,10 @@ function injectCode(){
 		}
 	};
 
+	if(!document.getElementById('c1').checked){
+		k = '';
+	}
+
 	if(!document.getElementById('c2').checked){
 		autoCreate && (code += "\tsetTimeout(function(){ytpInp1.createYT()},500);\n");
 		code += "}\n\n" + k;
