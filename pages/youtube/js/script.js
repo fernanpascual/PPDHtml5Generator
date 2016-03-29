@@ -16,6 +16,7 @@ var vidInpage = [],
 	isDynamic = false,
 	isMobile = false,
 	autoCreate = false,
+	allowVideoFullscreen = true,
 	videoInpageCount = document.getElementById("videoInpageCount"),
 	videoExpandCount = document.getElementById("videoExpandCount");
 
@@ -212,9 +213,12 @@ function populateInpageVideos(){
 		previewDuration = '';
 	}
 	var y = document.querySelector('.videoInpageAutoCreate'),
-		z = document.querySelector('.videoInpageFormat')
+		z = document.querySelector('.videoInpageFormat'),
+		xy = document.querySelector('.videoInpageAllowFullscreen');
+
 	autoCreate = (y.options[y.selectedIndex].value == "yes") ? true : false;
 	isMobile = (z.options[z.selectedIndex].value == "mobile") ? true : false;
+	allowVideoFullscreen = (xy.options[xy.selectedIndex].value == "yes") ? true : false;
 	//closeAdTrackings = document.querySelector('#videoInpageList #tracking-list #pCloseAdCounter1').value;
 }
 
@@ -327,7 +331,7 @@ function injectCode(){
 				"PAUSE_ON_START : false,\n\t\t" +
 				"MUTED : false,\n\t\t" +
 				"CONTROLS : '',\n\t\t" +
-				"ALLOWFULLSCREEN : false,\n\t\t" +
+				"ALLOWFULLSCREEN : " + allowVideoFullscreen + ",\n\t\t" +
 				"IS_MOBILE : " + "'" + isMobile + "'" +",\n\t\t" +
 				"TRACKING_METRICS_PLAYING : "+ "'" + engageInpTrackings[i-1][0] + "'" +",\n\t\t" +
 				"TRACKING_METRICS_PAUSE : "+ "'" + engageInpTrackings[i-1][5] + "'" +",\n\t\t" +
@@ -378,7 +382,7 @@ function injectCode(){
 				"PAUSE_ON_START : false,\n\t\t" +
 				"MUTED : false,\n\t\t" +
 				"CONTROLS : '',\n\t\t" +
-				"ALLOWFULLSCREEN : false,\n\t\t" +
+				"ALLOWFULLSCREEN : " + allowVideoFullscreen + ",\n\t\t" +
 				"IS_MOBILE : " + "'" + isMobile + "'" +",\n\t\t" +
 				"TRACKING_METRICS_PLAYING : "+ "'" + engageExpTrackings[i-1][0] + "'" +",\n\t\t" +
 				"TRACKING_METRICS_PAUSE : "+ "'" + engageExpTrackings[i-1][5] + "'" +",\n\t\t" +
@@ -408,8 +412,7 @@ function trackerRegister(){
 		b = document.querySelectorAll('#tracking-list li input.timer_tracker'),
 		c = document.querySelectorAll('#tracking-list-autoplay1 li input.counter_tracker'),
 		d = document.querySelectorAll('#tracking-list-autoplay1 li input.timer_tracker'),
-		e = "\n\nfunction registerTrackings(){\n\t" + 
-			"return;\n";
+		e = "\n\nfunction registerTrackings(){\n";
 
 	code += e;
 	for(var i = 0; a.length>i; i++){

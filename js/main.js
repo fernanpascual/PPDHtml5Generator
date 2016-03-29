@@ -17,8 +17,8 @@ function removeClass(){
 	document.getElementById('subNav-youtube').classList.remove("u-open")
 	document.querySelector('#nav-video a').classList.remove("u-open");
 	document.getElementById('subNav-video').classList.remove("u-open")
-	document.querySelector('#nav-lightbox a').classList.remove("u-open");
-	document.getElementById('subNav-lightbox').classList.remove("u-open")
+	document.querySelector('#nav-dateswap a').classList.remove("u-open");
+	document.getElementById('subNav-dateswap').classList.remove("u-open")
 	document.querySelector('#nav-dateswap a').classList.remove("u-open");
 	document.getElementById('subNav-dateswap').classList.remove("u-open")
 }
@@ -42,8 +42,13 @@ $(function () {
 });
 
 $("#plain-yotube").click(function() {
-	console.log('click')
 	document.querySelector('.subNavs').classList.add("u-closed");
 	removeClass();
-	$("#iframe").attr('src','pages/youtube.html'); 
+	$("#iframe").attr('src','pages/youtube/youtube.html'); 
+});
+
+$("#plain-dateswap").click(function() {
+	document.querySelector('.subNavs').classList.add("u-closed");
+	removeClass();
+	$("#iframe").attr('src','pages/dateswap/dateswap.html'); 
 });

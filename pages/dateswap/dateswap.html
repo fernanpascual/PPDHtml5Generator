@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<title>YOUTUBE TEMPLATE GENERATOR</title>
+		<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+		<link href='https://fonts.googleapis.com/css?family=Roboto+Slab:700' rel='stylesheet' type='text/css'>
+		<link href='css/style.css' rel='stylesheet' type='text/css'>
+	</head>
+	<body>		
+		<div class="container">
+			<header><span>DATE</span><span>SWAP</span></header> 
+			<form class="counters_form" action="" method="post" name="counters_form">
+				<table>
+					<tr>
+						<td>
+							<nav>
+								<ul>
+									<li id="nav-dateswap-image" class="nav_dateswap">
+										<a id = "c1Nav" href="#">
+											<input type="checkbox" id="c1" name="cc" />
+											<label for="c1"><span></span>IMAGE</label>
+										</a>
+									</li>
+									<li id="nav-youtube-multi" class="nav_dateswap">
+										<a id = "c2Nav" href="#">
+											<input type="checkbox" id="c2" name="cc" />
+											<label for="c2"><span></span>VIDEO</label>
+										</a>
+									</li>
+								</ul>
+							</nav>
+							<div id="liveDates" class="dateMenu show">
+								<h3>Live Date/s</h3>
+								<ul>
+									<li>
+										<label for="date">Live Date:</label>
+										<input type="text" name="text" id="liveDate" class='required date' placeholder="YYYY/MM/DD" required/>
+									</li>
+									<li>
+										<label for="date">Second Live Date?:</label>
+										<select id="secondLiveDate" class="secondLiveDate" name="date">
+											<option value="no">No</option>
+											<option value="yes">Yes</option>
+										</select>
+									</li>
+									<li id="liveDateList"></li>
+								</ul>
+								<div class="or-spacer">
+								  <div class="mask"></div>
+								</div>
+							</div>
+							<div id="c1Date" class="dateMenu">
+								<h3>Image/s Swap</h3>
+								<ul>
+									<li>
+										<label for="number">How many images:</label>
+	       		 						<input id="imageCount" class="required" type="text" name="number" placeholder="Number of videos. 1-5 only" maxlength="1" onclick="select()" required/>
+									</li>
+								</ul>
+								<ul id="imageList"></ul>
+								<div class="or-spacer">
+								  <div class="mask"></div>
+								</div>
+							</div>
+							<div id="c2Date" class="dateMenu">
+								<h3>Video/s Swap</h3>
+								<ul>
+									<li>
+										<label for="number">How many videos:</label>
+	       		 						<input id="videoCount" class="required" type="text" name="number" placeholder="Number of videos. 1-5 only" maxlength="1" onclick="select()" required/>
+									</li>	
+								</ul>
+								<ul id="videoList"></ul>
+								<div class="or-spacer">
+								  <div class="mask"></div>
+								</div>
+							</div>
+							<div id="submit" class="submit" type="submit" value="Submit">Generate</div>
+						</td>
+						<td>
+							<h3>Generated Code</h3>
+							<ul>
+								<li>
+									<textarea id="codeGenerated"name="codeGenerated" cols="40" rows="44"></textarea>
+								</li>	
+							</ul>
+							<a id="download" class="download">Download</a>
+						</td>
+					</tr>
+				</table>
+			</form>
+			<div class="message" id="message"></div>
+		</div>
+	</body>
+	<script src='js/script.js'></script>
+</html>
