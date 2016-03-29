@@ -16,6 +16,7 @@ var vidInpage = [],
 	isDynamic = false,
 	isMobile = false,
 	autoCreate = false,
+	autoUnmute = false,
 	allowVideoFullscreen = true,
 	videoInpageCount = document.getElementById("videoInpageCount"),
 	videoExpandCount = document.getElementById("videoExpandCount");
@@ -214,10 +215,12 @@ function populateInpageVideos(){
 	}
 	var y = document.querySelector('.videoInpageAutoCreate'),
 		z = document.querySelector('.videoInpageFormat'),
-		xy = document.querySelector('.videoInpageAllowFullscreen');
+		xy = document.querySelector('.videoInpageAllowFullscreen'),
+		yz = document.querySelector('.videoInpageAutoUnmute');
 
 	autoCreate = (y.options[y.selectedIndex].value == "yes") ? true : false;
 	isMobile = (z.options[z.selectedIndex].value == "mobile") ? true : false;
+	autoUnmute = (yz.options[yz.selectedIndex].value == "yes") ? true : false;
 	allowVideoFullscreen = (xy.options[xy.selectedIndex].value == "yes") ? true : false;
 	//closeAdTrackings = document.querySelector('#videoInpageList #tracking-list #pCloseAdCounter1').value;
 }
@@ -281,7 +284,8 @@ function injectCode(){
 		b = videoExpandCount.value,
 		c = document.getElementById('dyn').checked ? (dynamicInvo + "\n\n") : '',
 		d = c +
-			"window.onload = function() {\n\t" +
+			"window.addEventListener('load',windowLoaded)\n\n" +
+			"function windowLoaded() {\n\t" +
 				"if (Enabler.isInitialized()) {\n\t\t" +
 				  	"enablerInitHandler();\n\t" +
 				"} else {\n\t\t" +
@@ -294,7 +298,8 @@ function injectCode(){
 				    	"Enabler.addEventListener(studio.events.StudioEvent.PAGE_LOADED, pageLoadedHandler);\n\t\t" +
 				  	"}\n\t" +
 				"}\n\t" +
-				"console.log('window loading...');\n" +
+				"console.log('window loading...');\n\t" +
+				"window.removeEventListener('load',windowLoaded);\n" +
 			"}\n\n" +
 			"function pageLoadedHandler() {\n\t" +
 			"console.log('page loaded');\n\t" +
@@ -331,6 +336,7 @@ function injectCode(){
 				"PAUSE_ON_START : false,\n\t\t" +
 				"MUTED : false,\n\t\t" +
 				"CONTROLS : '',\n\t\t" +
+				"AUTO_UNMUTE : " + autoUnmute + ",\n\t\t" +
 				"ALLOWFULLSCREEN : " + allowVideoFullscreen + ",\n\t\t" +
 				"IS_MOBILE : " + "'" + isMobile + "'" +",\n\t\t" +
 				"TRACKING_METRICS_PLAYING : "+ "'" + engageInpTrackings[i-1][0] + "'" +",\n\t\t" +
@@ -382,6 +388,7 @@ function injectCode(){
 				"PAUSE_ON_START : false,\n\t\t" +
 				"MUTED : false,\n\t\t" +
 				"CONTROLS : '',\n\t\t" +
+				"AUTO_UNMUTE : " + autoUnmute + ",\n\t\t" +
 				"ALLOWFULLSCREEN : " + allowVideoFullscreen + ",\n\t\t" +
 				"IS_MOBILE : " + "'" + isMobile + "'" +",\n\t\t" +
 				"TRACKING_METRICS_PLAYING : "+ "'" + engageExpTrackings[i-1][0] + "'" +",\n\t\t" +
