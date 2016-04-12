@@ -213,12 +213,12 @@ function populateInpageVideos(){
 		}
 		previewDuration = '';
 	}
-	var y = document.querySelector('.videoInpageAutoCreate'),
-		z = document.querySelector('.videoInpageFormat'),
+	var z = document.querySelector('.videoInpageFormat'),
 		xy = document.querySelector('.videoInpageAllowFullscreen'),
 		yz = document.querySelector('.videoInpageAutoUnmute');
+		//y = document.querySelector('.videoInpageAutoCreate'),
 
-	autoCreate = (y.options[y.selectedIndex].value == "yes") ? true : false;
+	// autoCreate = (y.options[y.selectedIndex].value == "yes") ? true : false;
 	isMobile = (z.options[z.selectedIndex].value == "mobile") ? true : false;
 	autoUnmute = (yz.options[yz.selectedIndex].value == "yes") ? true : false;
 	allowVideoFullscreen = (xy.options[xy.selectedIndex].value == "yes") ? true : false;
