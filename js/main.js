@@ -19,8 +19,8 @@ function removeClass(){
 	document.getElementById('subNav-video').classList.remove("u-open")
 	document.querySelector('#nav-dateswap a').classList.remove("u-open");
 	document.getElementById('subNav-dateswap').classList.remove("u-open")
-	document.querySelector('#nav-dateswap a').classList.remove("u-open");
-	document.getElementById('subNav-dateswap').classList.remove("u-open")
+	document.querySelector('#nav-pixel a').classList.remove("u-open");
+	document.getElementById('subNav-pixel').classList.remove("u-open")
 }
 
 function sticky_relocate() {
